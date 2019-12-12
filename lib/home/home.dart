@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_truck_app/utils/MyButton.dart';
 import 'package:marquee_flutter/marquee_flutter.dart';
 
 /// home page
@@ -53,6 +55,28 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  /// 自定义cell
+  Widget customerBtn(
+      VoidCallback voidCallback, final IconData iconData, final String title) {
+    return new MaterialButton(
+      onPressed: voidCallback,
+//      color: Colors.blueGrey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+              icon: new Icon(
+            iconData,
+            size: 30,
+            color: Colors.lightGreen,
+          )),
+          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
+        ],
+      ),
+    );
+  }
+
   ///
   StatefulWidget marqueeWidget() {
     return new MarqueeWidget(
@@ -72,51 +96,80 @@ class HomePageState extends State<HomePage> {
           crossAxisCount: 2, //每行2个
           mainAxisSpacing: 10.0, //主轴方向间距
           crossAxisSpacing: 10.0, //水平方向间距
-          childAspectRatio: 1.0, //纵轴缩放比例
+          childAspectRatio: 1.5, //纵轴缩放比例
         ),
         children: <Widget>[
-          marqueeWidget(),
-          SizedBox(height: 10,),
+//          marqueeWidget(),
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: new GestureDetector(
-              onTap: onTab1,
-              child: cell(Icons.directions_bus, "车辆实时数据"),
-            ),
-          ),
-
-          ///
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: new GestureDetector(
-              onTap: onTab2,
-              child: cell(Icons.search, "车辆查询"),
-            ),
-          ),
-
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: new GestureDetector(
-              onTap: onTab3,
-              child: cell(Icons.multiline_chart, "报表统计"),
+            child: MyButton(
+              onPress: onTab1,
+              title: Text("车辆实时数据",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.directions_bus,
+                size: 30,
+                color: Colors.blue,
+              )),
             ),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: new GestureDetector(
-              onTap: onTab4,
-              child: cell(Icons.ev_station, "站点信息"),
+            child: MyButton(
+              onPress: onTab2,
+              title: Text("车辆查询",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.search,
+                size: 30,
+                color: Colors.lightGreen,
+              )),
             ),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: new GestureDetector(
-              onTap: onTab5,
-              child: cell(Icons.more_horiz, "more"),
+            child: MyButton(
+              onPress: onTab3,
+              title: Text("报表统计",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.multiline_chart,
+                size: 30,
+                color: Colors.amberAccent,
+              )),
             ),
           ),
-
-         // marqueeWidget(),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: MyButton(
+              onPress: onTab4,
+              title: Text("站点信息",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.ev_station,
+                size: 30,
+                color: Colors.orange,
+              )),
+            ),
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: MyButton(
+              onPress: onTab5,
+              title: Text("more",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.more_horiz,
+                size: 30,
+                color: Colors.lightBlue,
+              )),
+            ),
+          ),
         ],
       ),
     );
@@ -129,10 +182,9 @@ class HomePageState extends State<HomePage> {
           centerTitle: true,
           title: Text("首页", style: TextStyle(fontSize: 15)),
         ),
-        //body: marqueeWidget(),
-//      body: gridViewMenu(),
-        body: Center(child: gridViewMenu())
-//            marqueeWidget(
-        );
+        body: gridViewMenu());
+
+//    marqueeWidget(),
+    // gridViewMenu(),
   }
 }
