@@ -60,7 +60,26 @@ class HomePageState extends State<HomePage> {
   }
 
   void onTab5() {
-    print("5..");
+    infoDialog();
+  }
+
+  ///
+  void infoDialog() {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return new CupertinoAlertDialog(
+            content: new Text("待完善..."),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context); //关闭对话框
+                  },
+                  child: new Text("取消"),
+                  textColor: Colors.grey),
+            ],
+          );
+        });
   }
 
   /// 自定义cell
