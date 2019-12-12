@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_truck_app/menu/menu.dart';
 
 ///输入法切换的快捷键 control+space
 ///command+option+L 格式化代码
@@ -16,14 +17,28 @@ class LoginPage extends StatelessWidget {
       new TextEditingController();
 
   /// login
+  ///
+  ///  void doNavigator() {}
+  ///
+  void doNavigator() {
+    // TODO go to home
+    Navigator.of(_context).push(new MaterialPageRoute(builder: (context) {
+      return new MenuPage();
+    }));
+    print("MenuPage..");
+  }
 
   void login() {
     print('login');
     print('input userName: ${_controllerNameTextField.text}');
     print('input pwd: ${_controllerPwdTextField.text}');
-    //如果有值
+
     if ('${_controllerNameTextField.text}'.isNotEmpty) {
+      //如果有值
+      doNavigator();
       //infoDialog('${_controllerNameTextField.text}');
+    } else {
+      infoDialog("用户名不能为空！");
     }
     //
   }

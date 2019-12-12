@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_truck_app/menu/menu.dart';
+import 'package:flutter_truck_app/login.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MenuPage(),
+      home: LoginPage(),
     );
   }
 }
