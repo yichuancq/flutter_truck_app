@@ -326,6 +326,7 @@ class MePageState extends State<MePage> {
         child: new Icon(Icons.mail),
         backgroundColor: Colors.orange,
       ),
+//      body: initView(),
       body: initView(),
     );
   }

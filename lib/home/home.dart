@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee_flutter/marquee_flutter.dart';
 
 /// home page
 class HomePage extends StatefulWidget {
@@ -52,6 +53,15 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  ///
+  StatefulWidget marqueeWidget() {
+    return new MarqueeWidget(
+      text: "我的跑马灯。。。。。。 我是跑马灯。。。。",
+      textStyle: new TextStyle(fontSize: 16.0),
+      scrollAxis: Axis.horizontal,
+    );
+  }
+
   ///menu
   Widget gridViewMenu() {
     return new Container(
@@ -65,6 +75,8 @@ class HomePageState extends State<HomePage> {
           childAspectRatio: 1.0, //纵轴缩放比例
         ),
         children: <Widget>[
+          marqueeWidget(),
+          SizedBox(height: 10,),
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: new GestureDetector(
@@ -103,6 +115,8 @@ class HomePageState extends State<HomePage> {
               child: cell(Icons.more_horiz, "more"),
             ),
           ),
+
+         // marqueeWidget(),
         ],
       ),
     );
@@ -111,11 +125,14 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("首页", style: TextStyle(fontSize: 15)),
-      ),
-      body: gridViewMenu(),
-    );
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("首页", style: TextStyle(fontSize: 15)),
+        ),
+        //body: marqueeWidget(),
+//      body: gridViewMenu(),
+        body: Center(child: gridViewMenu())
+//            marqueeWidget(
+        );
   }
 }

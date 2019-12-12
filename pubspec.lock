@@ -128,6 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  marquee_flutter:
+    dependency: "direct main"
+    description:
+      name: marquee_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   matcher:
     dependency: transitive
     description:
