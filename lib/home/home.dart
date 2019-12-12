@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_truck_app/utils/MyButton.dart';
+import 'package:flutter_truck_app/report/report.dart';
+import 'package:flutter_truck_app/station/station.dart';
+import 'package:flutter_truck_app/truck/truckInfoList.dart';
+import 'package:flutter_truck_app/truck/truckQuery.dart';
+import 'package:flutter_truck_app/utils/my_button.dart';
 import 'package:marquee_flutter/marquee_flutter.dart';
 
 /// home page
@@ -14,20 +18,44 @@ class HomePage extends StatefulWidget {
 
 //onTap 对应点击事件，使用GestureDetector 手势检测器 可以给 widget添加点击事件
 class HomePageState extends State<HomePage> {
+  void doNavigator() {}
+
+  ///车辆实时数据
+  void onTabTruckInfo() {
+    //TruckInfoListPage
+    //go to station
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new TruckInfoListPage();
+    }));
+    print("车辆实时数据..");
+  }
+
+  ///车辆查询
+  void onTabTruckQuery() {
+    //go to station
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new TruckQueryPage();
+    }));
+    print("车辆查询..");
+  }
+
+  ///报表统计
   ///
-  void onTab1() {
-    print("1..");
+  void onTabReportPage() {
+    ///ReportPage
+    //go to station
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new ReportPage();
+    }));
+    print("报表统计..");
   }
 
-  void onTab2() {
-    print("2..");
-  }
-
-  void onTab3() {
-    print("3..");
-  }
-
-  void onTab4() {
+  /// station
+  void onTabStation() {
+    //go to station
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new StationListPage();
+    }));
     print("4..");
   }
 
@@ -103,7 +131,7 @@ class HomePageState extends State<HomePage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: MyButton(
-              onPress: onTab1,
+              onPress: onTabTruckInfo,
               title: Text("车辆实时数据",
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               iconButton: new IconButton(
@@ -117,7 +145,7 @@ class HomePageState extends State<HomePage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: MyButton(
-              onPress: onTab2,
+              onPress: onTabTruckQuery,
               title: Text("车辆查询",
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               iconButton: new IconButton(
@@ -131,7 +159,7 @@ class HomePageState extends State<HomePage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: MyButton(
-              onPress: onTab3,
+              onPress: onTabReportPage,
               title: Text("报表统计",
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               iconButton: new IconButton(
@@ -145,7 +173,7 @@ class HomePageState extends State<HomePage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: MyButton(
-              onPress: onTab4,
+              onPress: onTabStation,
               title: Text("站点信息",
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               iconButton: new IconButton(
