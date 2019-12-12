@@ -18,6 +18,16 @@ class HomePage extends StatefulWidget {
 
 //onTap 对应点击事件，使用GestureDetector 手势检测器 可以给 widget添加点击事件
 class HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void doNavigator() {}
 
   ///车辆实时数据

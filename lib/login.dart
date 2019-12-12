@@ -16,10 +16,6 @@ class LoginPage extends StatelessWidget {
   static final TextEditingController _controllerPwdTextField =
       new TextEditingController();
 
-  /// login
-  ///
-  ///  void doNavigator() {}
-  ///
   void doNavigator() {
     // TODO go to home
     Navigator.of(_context).push(new MaterialPageRoute(builder: (context) {
@@ -159,7 +155,8 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: new Text("Login"),
+        title: Text("德州市齐河县科技治执法管理平台", style: TextStyle(fontSize: 15)),
+//        title: new Text("德州市齐河县科技治执法管理平台"),
       ),
       backgroundColor: Colors.white,
       body: Container(
