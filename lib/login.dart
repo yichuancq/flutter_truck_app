@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+///输入法切换的快捷键 control+space
+///command+option+L 格式化代码
 //登陆页面
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
@@ -15,7 +17,6 @@ class LoginPage extends StatelessWidget {
     print('login');
     print('input userName: ${_controllerNameTextField.text}');
     print('input pwd: ${_controllerPwdTextField.text}');
-
   }
 
   static void resetBtn() {
@@ -107,14 +108,12 @@ class LoginPage extends StatelessWidget {
 //    });
 
     return Scaffold(
-
       appBar: AppBar(
         centerTitle: true,
         title: new Text("Login"),
       ),
       backgroundColor: Colors.white,
       body: Container(
-
         padding: EdgeInsets.all(10),
 //        child: buildTextField(controller),
         child: loginWidget,

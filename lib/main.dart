@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_truck_app/login.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Home Page'),
+      home: LoginPage(),
+//      home: MyHomePage(title: 'Home Page'),
     );
   }
 }
