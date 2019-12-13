@@ -91,49 +91,6 @@ class HomePageState extends State<HomePage> {
           );
         });
   }
-
-  /// 自定义cell
-//  Widget cell(final IconData iconData, final String title) {
-//    return new Container(
-//      color: Colors.blueGrey,
-//      child: Column(
-//        mainAxisAlignment: MainAxisAlignment.center,
-//        crossAxisAlignment: CrossAxisAlignment.center,
-//        children: <Widget>[
-//          IconButton(
-//              icon: new Icon(
-//            iconData,
-//            size: 30,
-//            color: Colors.lightGreen,
-//          )),
-//          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
-//        ],
-//      ),
-//    );
-//  }
-
-  /// 自定义cell
-//  Widget customerBtn(
-//      VoidCallback voidCallback, final IconData iconData, final String title) {
-//    return new MaterialButton(
-//      onPressed: voidCallback,
-////      color: Colors.blueGrey,
-//      child: Column(
-//        mainAxisAlignment: MainAxisAlignment.center,
-//        crossAxisAlignment: CrossAxisAlignment.center,
-//        children: <Widget>[
-//          IconButton(
-//              icon: new Icon(
-//            iconData,
-//            size: 30,
-//            color: Colors.lightGreen,
-//          )),
-//          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
-//        ],
-//      ),
-//    );
-//  }
-
   ///
   StatefulWidget marqueeWidget() {
     return new MarqueeWidget(
@@ -213,6 +170,37 @@ class HomePageState extends State<HomePage> {
               )),
             ),
           ),
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: MyButton(
+              onPress: onTab5,
+              title: Text("设备诊断",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.devices,
+                size: 30,
+                color: Colors.yellow,
+              )),
+            ),
+          ),
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: MyButton(
+              onPress: onTab5,
+              title: Text("组织单位",
+                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              iconButton: new IconButton(
+                  icon: new Icon(
+                Icons.streetview,
+                size: 30,
+                color: Colors.blueAccent,
+              )),
+            ),
+          ),
+
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: MyButton(
@@ -231,6 +219,7 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

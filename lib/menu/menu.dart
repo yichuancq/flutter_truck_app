@@ -44,8 +44,8 @@ class MenuPageState extends State<MenuPage> {
             title: new Text("首页", style: TextStyle(color: Colors.grey)),
           ),
           new BottomNavigationBarItem(
-            icon: new Icon(Icons.view_list),
-            title: new Text("数据", style: TextStyle(color: Colors.grey)),
+            icon: new Icon(Icons.cloud),
+            title: new Text("检索", style: TextStyle(color: Colors.grey)),
           ),
           new BottomNavigationBarItem(
             icon: new Icon(Icons.person),
