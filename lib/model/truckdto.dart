@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class TruckDto {
   List<Rows> rows;
   int total;
@@ -46,7 +48,8 @@ class Rows {
   String sD;
   int zZ;
   int cX;
-  double cXL;
+  dynamic cXL;
+//  double cXL;
   String cLBS;
   Null cLSJ;
   Null cLRY;
@@ -134,6 +137,7 @@ class Rows {
     sD = json['SD'];
     zZ = json['ZZ'];
     cX = json['CX'];
+    //
     cXL = json['CXL'];
     cLBS = json['CLBS'];
     cLSJ = json['CLSJ'];

@@ -92,26 +92,26 @@ class StationListPageState extends State<StationListPage> {
     );
   }
 
-  Widget buildViewCard(final int position) {
-    StationDto stationDto = stationList[position];
-
-    /// 卡片布局
-    return new Card(
-      elevation: 2,
-      margin: EdgeInsets.all(2),
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(
-            "站点编码:" + stationDto.zDCode,
-            style: TextStyle(color: Colors.green),
-          ),
-          new Text("站点名称:" + stationDto.zDName),
-          new Text("" + stationDto.createDate),
-        ],
-      ),
-    );
-  }
+//  Widget buildViewCard(final int position) {
+//    StationDto stationDto = stationList[position];
+//
+//    /// 卡片布局
+//    return new Card(
+//      elevation: 2,
+//      margin: EdgeInsets.all(2),
+//      child: new Column(
+//        crossAxisAlignment: CrossAxisAlignment.start,
+//        children: <Widget>[
+//          new Text(
+//            "站点编码:" + stationDto.zDCode,
+//            style: TextStyle(color: Colors.green),
+//          ),
+//          new Text("站点名称:" + stationDto.zDName),
+//          new Text("" + stationDto.createDate),
+//        ],
+//      ),
+//    );
+//  }
 
   //实现构建方法
   viewBuild() {
