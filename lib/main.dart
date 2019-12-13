@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_truck_app/login.dart';
 
 void main() => runApp(MyApp());
-
+//https://javiercbk.github.io/json_to_dart/
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
