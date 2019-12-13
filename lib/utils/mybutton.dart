@@ -7,7 +7,7 @@ class MyButton extends StatelessWidget {
   VoidCallback onPress;
   Text title;
   IconButton iconButton;
-
+//  Color color;
   //constructor
   MyButton({this.onPress, this.title, this.iconButton});
 
@@ -15,6 +15,7 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialButton(
       onPressed: this.onPress,
+//      color: this.color,
       color: Colors.blueGrey,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,

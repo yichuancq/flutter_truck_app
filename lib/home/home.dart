@@ -5,7 +5,7 @@ import 'package:flutter_truck_app/report/report.dart';
 import 'package:flutter_truck_app/station/station1.dart';
 import 'package:flutter_truck_app/truck/truckInfoList.dart';
 import 'package:flutter_truck_app/truck/truckQuery.dart';
-import 'package:flutter_truck_app/utils/my_button.dart';
+import 'package:flutter_truck_app/utils/mybutton.dart';
 import 'package:marquee_flutter/marquee_flutter.dart';
 
 /// home page
@@ -93,46 +93,46 @@ class HomePageState extends State<HomePage> {
   }
 
   /// 自定义cell
-  Widget cell(final IconData iconData, final String title) {
-    return new Container(
-      color: Colors.blueGrey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          IconButton(
-              icon: new Icon(
-            iconData,
-            size: 30,
-            color: Colors.lightGreen,
-          )),
-          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
-        ],
-      ),
-    );
-  }
+//  Widget cell(final IconData iconData, final String title) {
+//    return new Container(
+//      color: Colors.blueGrey,
+//      child: Column(
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        crossAxisAlignment: CrossAxisAlignment.center,
+//        children: <Widget>[
+//          IconButton(
+//              icon: new Icon(
+//            iconData,
+//            size: 30,
+//            color: Colors.lightGreen,
+//          )),
+//          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
+//        ],
+//      ),
+//    );
+//  }
 
   /// 自定义cell
-  Widget customerBtn(
-      VoidCallback voidCallback, final IconData iconData, final String title) {
-    return new MaterialButton(
-      onPressed: voidCallback,
-//      color: Colors.blueGrey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          IconButton(
-              icon: new Icon(
-            iconData,
-            size: 30,
-            color: Colors.lightGreen,
-          )),
-          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
-        ],
-      ),
-    );
-  }
+//  Widget customerBtn(
+//      VoidCallback voidCallback, final IconData iconData, final String title) {
+//    return new MaterialButton(
+//      onPressed: voidCallback,
+////      color: Colors.blueGrey,
+//      child: Column(
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        crossAxisAlignment: CrossAxisAlignment.center,
+//        children: <Widget>[
+//          IconButton(
+//              icon: new Icon(
+//            iconData,
+//            size: 30,
+//            color: Colors.lightGreen,
+//          )),
+//          Text(title, style: TextStyle(fontSize: 15, color: Colors.white)),
+//        ],
+//      ),
+//    );
+//  }
 
   ///
   StatefulWidget marqueeWidget() {
@@ -231,7 +231,6 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -240,8 +239,5 @@ class HomePageState extends State<HomePage> {
           title: Text("首页", style: TextStyle(fontSize: 15)),
         ),
         body: gridViewMenu());
-
-//    marqueeWidget(),
-    // gridViewMenu(),
   }
 }
