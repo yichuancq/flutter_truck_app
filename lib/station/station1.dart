@@ -87,8 +87,7 @@ class StationListPageState extends State<StationListPage> {
   //构造数据
   getRowData(int position) {
     return GestureDetector(
-//      child:
-//          Padding(padding: EdgeInsets.all(5.0), child: buildViewCard(position)),
+//      child:Padding(padding: EdgeInsets.all(5.0), child: buildViewCard(position)),
       child: Padding(padding: EdgeInsets.all(5.0), child: buildRow(position)),
     );
   }
@@ -99,7 +98,6 @@ class StationListPageState extends State<StationListPage> {
     /// 卡片布局
     return new Card(
       elevation: 2,
-      //color: Colors.grey,
       margin: EdgeInsets.all(2),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,10 +131,7 @@ class StationListPageState extends State<StationListPage> {
             }),
         onRefresh: () async {
           await new Future.delayed(const Duration(seconds: 1), () {
-            setState(() {
-              //topicList.clear();
-              //topicList.addAll(topicList);
-            });
+            setState(() {});
           });
         },
       ),
@@ -150,14 +145,6 @@ class StationListPageState extends State<StationListPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("站点信息", style: TextStyle(fontSize: 15)),
-//        actions: <Widget>[
-//          new IconButton(
-//              icon: new Icon(Icons.search),
-//              tooltip: 'Search',
-//              onPressed: () {
-//                // do nothing
-//              }),
-//        ],
       ),
       body: viewBuild(),
     );
