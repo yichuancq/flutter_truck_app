@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -35,13 +34,16 @@ class StationListPageState extends State<StationListPage> {
   @override
   void dispose() {
     super.dispose();
+    stationList = null;
+    _easyRefreshKey = null;
+    _headerKey = null;
     print("on dispose...");
   }
 
   void loadData() async {
     //读取json
     List<StationDto> stations = await decodeFromDTO();
-    print("list size: ${stations.length}");
+//    print("list size: ${stations.length}");
     stationList = stations;
     //更新列表
     setState(() {
@@ -56,18 +58,21 @@ class StationListPageState extends State<StationListPage> {
     ///ListTile布局
     return new ListTile(
       onTap: () {},
-      title: Text(stationDto.zDCode),
+      title: Text(
+        stationDto.zDCode,
+        style: TextStyle(color: Colors.black, fontSize: 15),
+      ),
       // 自定义样式
       subtitle: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(stationDto.zDName,
+              style: TextStyle(color: Colors.black, fontSize: 15)),
+          Text(stationDto.xLCode + " , " + stationDto.xLName,
               style: TextStyle(color: Colors.black, fontSize: 13)),
-          Text(stationDto.xLCode + " " + stationDto.xLName,
-              style: TextStyle(color: Colors.grey, fontSize: 13)),
           Text("创建时间:" + stationDto.createDate,
-              style: TextStyle(color: Colors.orangeAccent, fontSize: 13)),
+              style: TextStyle(color: Colors.green, fontSize: 13)),
         ],
       ),
       //
@@ -145,14 +150,14 @@ class StationListPageState extends State<StationListPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("站点信息", style: TextStyle(fontSize: 15)),
-        actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.search),
-              tooltip: 'Search',
-              onPressed: () {
-                // do nothing
-              }),
-        ],
+//        actions: <Widget>[
+//          new IconButton(
+//              icon: new Icon(Icons.search),
+//              tooltip: 'Search',
+//              onPressed: () {
+//                // do nothing
+//              }),
+//        ],
       ),
       body: viewBuild(),
     );
