@@ -43,9 +43,8 @@ class StationListPageState extends State<StationListPage> {
 
   void loadData() async {
     //读取json
-    List<StationDto> stations = await decodeFromDTO();
+    stationList = await decodeFromDTO();
 //    print("list size: ${stations.length}");
-    stationList = stations;
     //更新列表
     setState(() {
       //状态
