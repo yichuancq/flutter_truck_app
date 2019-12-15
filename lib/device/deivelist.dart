@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class ExpandableList extends StatefulWidget {
   @override
-  _ExpandableListState createState() => _ExpandableListState();
+  ExpandableListState createState() => ExpandableListState();
 }
 
-class _ExpandableListState extends State<ExpandableList> {
+class ExpandableListState extends State<ExpandableList> {
   //生成一组测试数据
   static const STATION_NAMES = {
     '齐河县非现场S105北往南向检测点': ['子菜单1', '子菜单2', '子菜单3'],
