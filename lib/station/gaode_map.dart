@@ -28,7 +28,6 @@ class _MapPageState<StationDto> extends State<MapPage>
   void initState() {
     super.initState();
     if (_stationDto != null && _stationDto.target != null) {
-//      print("target: " + _stationDto.target);
       var arr = _stationDto.target.split(",");
       print("经纬度:  ${arr[0]}   ${arr[1]} ");
     }
@@ -80,7 +79,7 @@ class _MapPageState<StationDto> extends State<MapPage>
         logoPosition: LOGO_POSITION_BOTTOM_CENTER,
         camera: CameraPosition(
           target: LatLng(double.parse(arr[1]), double.parse(arr[0])),
-          zoom: 9,
+          zoom: 10,
         ),
       ),
     );
