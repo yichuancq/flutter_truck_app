@@ -58,6 +58,7 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     ///ListTile布局
     return new ListTile(
       onTap: () {},
+      // leading: Icon(Icons.directions_bus),
       title: Text("车牌号：${dto.cPH}",
           style: TextStyle(color: Colors.black, fontSize: 15)),
       // 自定义样式

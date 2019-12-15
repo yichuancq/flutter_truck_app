@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_truck_app/report/report.dart';
-import 'package:flutter_truck_app/station/station1.dart';
+import 'package:flutter_truck_app/station/station_cardview_list.dart';
 import 'package:flutter_truck_app/truck/truckInfoList.dart';
 import 'package:flutter_truck_app/truck/truckQuery.dart';
 import 'package:flutter_truck_app/utils/mybutton.dart';
