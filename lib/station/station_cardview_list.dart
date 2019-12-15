@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_truck_app/model/stationdto.dart';
-import 'package:flutter_truck_app/station/station.dart';
+import 'package:flutter_truck_app/station/gaode_map.dart';
 import 'package:flutter_truck_app/vo/stationvo.dart';
 
 /// StationListPage
@@ -61,10 +61,14 @@ class StationListPageState extends State<StationListPage> {
   }
 
   ///跳转到下一页
-  void doNavigator() {
+  void doNavigator(StationDto stationDto) {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
       //跳转到下一页
-      return new StationDetailPage();
+      if (stationDto != null && stationDto.target != null) {
+        return new MapPage(stationDto: stationDto);
+      } else {
+        return null;
+      }
     }));
   }
 
@@ -132,6 +136,7 @@ class StationListPageState extends State<StationListPage> {
                       Expanded(
                         flex: 1,
                         child: Container(
+                          //线路code和名称
                           child: Text(
                               " ${stationDto.xLCode}, ${stationDto.xLName}",
                               style:
@@ -153,10 +158,12 @@ class StationListPageState extends State<StationListPage> {
 
     return GestureDetector(
       onTap: () {
+        StationDto stationDto = stationList[position];
+        print("att -->${stationDto.target}");
         //监听点击事件
         print("click item index=$position");
         //跳转到详情页面
-        doNavigator();
+        doNavigator(stationDto);
       },
       child: new Card(
         child: row,
