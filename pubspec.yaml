@@ -40,6 +40,13 @@ dependencies:
   #高德地图
   #amap_base: ^0.3.5
   amap_base_map: ^0.4.4+1
+  #search panel
+  # flutter_search_panel: ^1.0.1
+  #flutter_sliding_up_panel: ^0.0.3
+  #
+  #sliding_panel: ^0.7.0
+  #
+#  sliding_up_panel: ^0.3.6
 
 dev_dependencies:
   flutter_test:

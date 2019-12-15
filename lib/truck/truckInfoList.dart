@@ -129,13 +129,15 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
                         flex: 1,
                         child: Text(
                             "总重:${dto.zZ} kg 速度:${dto.sD} km/h  ,超限率: ${dto.cXL} %",
-                            style: TextStyle(color: Colors.black, fontSize: 13)),
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 13)),
                       ),
 
                       Expanded(
                         flex: 1,
                         child: Text("轴数 : ${dto.zS} , 超限:${dto.cX} kg",
-                            style: TextStyle(color: Colors.black, fontSize: 13)),
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 13)),
                       ),
                       Expanded(
                         flex: 1,
@@ -152,12 +154,7 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
 
     return GestureDetector(
       onTap: () {
-        // StationDto stationDto = stationList[position];
-        //print("att -->${stationDto.target}");
-        //监听点击事件
         print("click item index=$position");
-        //跳转到详情页面
-        //doNavigator(stationDto);
       },
       child: new Card(
         child: row,
@@ -208,12 +205,11 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
   getRowData(int position) {
     return GestureDetector(
       //buildRows
-//      child: Padding(padding: EdgeInsets.all(5.0), child: buildRow(position)),
       child: Padding(padding: EdgeInsets.all(2.0), child: buildRows(position)),
     );
   }
 
-  viewBuild() {
+  Widget _viewBuild() {
     return Center(
       child: new EasyRefresh(
         key: _easyRefreshKey,
@@ -242,11 +238,17 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
+        actions: <Widget>[
+          // 非隐藏的菜单
+          new IconButton(
+              icon: new Icon(Icons.search), tooltip: '筛选', onPressed: () {}),
+        ],
         centerTitle: true,
         title: Text("车辆实时数据", style: TextStyle(fontSize: 15)),
-//        title: new Text("检车数据"),
       ),
-      body: viewBuild(),
+//    body: viewBuild(),
+      body: new SafeArea(child: _viewBuild()),
+//       child: FooterAndScroll(),
     );
   }
 }
