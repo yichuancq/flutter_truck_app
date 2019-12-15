@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_truck_app/device/deivelist.dart';
 import 'package:flutter_truck_app/report/report.dart';
 import 'package:flutter_truck_app/station/station_cardview_list.dart';
 import 'package:flutter_truck_app/truck/truckInfoList.dart';
@@ -60,6 +61,14 @@ class HomePageState extends State<HomePage> {
     print("报表统计..");
   }
 
+  ///设备管理
+  void onTabDevice() {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new ExpandableList();
+    }));
+    print("报表统计..");
+  }
+
   /// station
   void onTabStation() {
     //go to station
@@ -91,6 +100,7 @@ class HomePageState extends State<HomePage> {
           );
         });
   }
+
   ///
   StatefulWidget marqueeWidget() {
     return new MarqueeWidget(
@@ -174,7 +184,7 @@ class HomePageState extends State<HomePage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: MyButton(
-              onPress: onTab5,
+              onPress: onTabDevice,
               title: Text("设备诊断",
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               iconButton: new IconButton(
