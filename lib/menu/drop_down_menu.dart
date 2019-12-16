@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_truck_app/truck/truckInfoList2.dart';
 import 'menu_data.dart';
+
 ///下拉筛选
 ///
 dynamic subData;
@@ -21,6 +22,7 @@ class DropDownMenu extends StatefulWidget {
 class DropDownMenuState extends State<DropDownMenu>
     with AutomaticKeepAliveClientMixin {
   GlobalKey globalKey;
+  var listView = new TruckInfoListPage(data: subData);
 
   ///
   @override
@@ -65,15 +67,11 @@ class DropDownMenuState extends State<DropDownMenu>
   }
 
   Widget myController() {
-    //  var listView = new EarthQuakeCardRefreshFilterListView(parentMenuId: degreeType, data: subData);
-    var listView = new TruckInfoListPage();
-//    var listView = new StationListPage();
     listView.createState();
     //
     return new Column(
       children: <Widget>[
         buildDropdownHeader(),
-//        headView(),
         new Expanded(
             child: new Stack(
           children: <Widget>[
@@ -93,6 +91,12 @@ class DropDownMenuState extends State<DropDownMenu>
         setState(() {
           degreeType = menuIndex;
           subData = data;
+          print("menu id->${menuIndex}");
+          print("index ->${index}");
+          print("subIndex ->${subIndex}");
+          print("data ->${data.toString()}");
+          // TODO refresh
+          //{title: S105NB, id: 4}
         });
       },
       child: myController(),
@@ -102,6 +106,7 @@ class DropDownMenuState extends State<DropDownMenu>
   @override
   void dispose() {
     super.dispose();
+    listView = null;
   }
 
   ///
@@ -110,22 +115,15 @@ class DropDownMenuState extends State<DropDownMenu>
     String title = "车辆查询";
     //更新列表
     setState(() {
-//      print("_parentMenuId1=$parentMenuId");
+//     print("_parentMenuId1=$parentMenuId");
       print("_subData1=$subData");
-      //title="";
-      //状态
-//      if (subData != null && subData['title'] != null) {
-//        title = subData['title'];
-//      }
     });
     return new Scaffold(
       appBar: AppBar(
-//        automaticallyImplyLeading: false, //设置没有返回按钮
         centerTitle: true,
         title: Text(title, style: TextStyle(fontSize: 15)),
       ),
       body: buildFixHeaderDropdownMenu(),
-      //body: buildFixHeaderDropdownMenu(_parentMenuId1, _subData1),
     );
   }
 }

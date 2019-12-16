@@ -241,7 +241,7 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
         actions: <Widget>[
           // 非隐藏的菜单
           new IconButton(
-              icon: new Icon(Icons.search), tooltip: '筛选', onPressed: () {}),
+              icon: new Icon(Icons.more_vert), tooltip: 'setting', onPressed: () {}),
         ],
         centerTitle: true,
         title: Text("车辆实时数据", style: TextStyle(fontSize: 15)),

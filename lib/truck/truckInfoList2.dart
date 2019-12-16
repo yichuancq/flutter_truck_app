@@ -4,18 +4,58 @@ import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_truck_app/model/truckdto.dart';
 import 'package:flutter_truck_app/vo/truckvo.dart';
-
 /// 车辆实时数据
+///
+/// //子类别 default
+int parentMId = 0;
+Map<String, dynamic> subData;
+int degreeType = 0;
+int currentPage = 0; //第一页
+List<Rows> _truckList = [];
+
 class TruckInfoListPage extends StatefulWidget {
+  static TruckInfoListPageState _infoListPageState;
+
+//父菜单的Id
+  final int parentMenuId;
+
+  //子类别
+  final dynamic data;
+
+  const TruckInfoListPage({Key key, this.parentMenuId, this.data})
+      : super(key: key);
+
   @override
-  State<StatefulWidget> createState() {
-    return TruckInfoListPageState();
+  State<StatefulWidget> createState({Key key, data}) {
+    _infoListPageState = new TruckInfoListPageState();
+    if (parentMenuId != null && data != null) {
+      parentMId = parentMenuId;
+      subData = data;
+    }
+    setDegreeParams();
+    return _infoListPageState;
+  } //
+
+  void setDegreeParams() {
+    if (data != null && data['id'] != null) {
+      degreeType = int.parse("${data['id']}");
+    } else {
+      degreeType = 4;
+    }
+    print("degreeType:$degreeType");
   }
+//
+//  ///筛选
+//  void refreshListView() {
+//    _infoListPageState.loadData();
+//  }
 }
 
-class TruckInfoListPageState extends State<TruckInfoListPage> {
+class TruckInfoListPageState extends State<TruckInfoListPage>
+    with AutomaticKeepAliveClientMixin {
   //自定义一个数据集合
-  List<Rows> _truckList = [];
+
+  TruckInfoListPageState();
 
   GlobalKey<EasyRefreshState> _easyRefreshKey =
       new GlobalKey<EasyRefreshState>();
@@ -34,18 +74,65 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
   @override
   void dispose() {
     super.dispose();
-    _truckList = null;
+    _truckList.clear();
     _easyRefreshKey = null;
     _headerKey = null;
     print("on dispose...");
   }
 
+//  /// 刷新列表
+//  void refresh(dynamic data) async {
+//    //
+//
+//    print("list data: ${data}");
+//    print("reresh...");
+//
+//
+//  //  new ReloadData().loadData();
+////    loadData();
+////    Map<String, dynamic> map = data;
+////    var flag = map.containsKey("title");
+////    print(flag);
+//    /// 解析KEY的值
+//    if (data != null && data['title'] != null) {
+//      print("menu key is:" + data['title']);
+//    }
+//    print("list size: ${_truckList.length}");
+//    _truckList.forEach((element) {
+//      //遍历每个元素  此时不可add或remove  否则报错 但可以修改元素值
+//      print(element.dD);
+//    });
+//    var key = data['title'];
+//
+//    ///ZDCode
+//    var whereList = _truckList.where((element) => element.dD == key).toList();
+//    print("过滤后的集合大小 :${whereList.length}");
+//
+//    _truckList.clear();
+//    _truckList.addAll(whereList);
+//    setState(() {
+//      print("flter...");
+//    });
+//  }
+
+  ///
   void loadData() async {
     //读取json
     TruckDto truckDto = await decodeFromDTO();
     _truckList = truckDto.rows;
+    if (subData != null && subData['title'] != null) {
+      print("menu key is:" + subData['title']);
+      var key = subData['title'];
+      ///ZDCode
+      var whereList = _truckList.where((element) => element.dD == key).toList();
+      print("过滤后的集合大小 :${whereList.length}");
+      _truckList.clear();
+      _truckList = whereList;
+    } else {
+      _truckList = truckDto.rows;
+    }
     print("list size: ${_truckList.length}");
-    //更新列表
+//    //更新列表
     setState(() {
       //状态
     });
@@ -162,8 +249,6 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     );
   }
 
-
-
   //构造数据
   getRowData(int position) {
     return GestureDetector(
@@ -203,5 +288,34 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
 //    body: viewBuild(),
       body: new SafeArea(child: _viewBuild()),
     );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+////
+class ReloadData extends StatelessWidget {
+  //callback
+  @required
+  VoidCallback onPress;
+
+  void action() {
+    print('action');
+  }
+
+  void loadData() async {
+    //读取json
+    TruckDto truckDto = await decodeFromDTO();
+    _truckList = truckDto.rows;
+//    print("list size: ${_truckList.length}");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ///
+    ///
+    ///
+    return null;
   }
 }
