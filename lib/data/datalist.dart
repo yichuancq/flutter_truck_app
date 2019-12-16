@@ -14,6 +14,7 @@ class DataListPageState extends State<DataListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, //设置没有返回按钮
         centerTitle: true,
         title: Text("检车数据", style: TextStyle(fontSize: 15)),
 //        title: new Text("检车数据"),

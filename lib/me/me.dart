@@ -39,7 +39,7 @@ class MePageState extends State<MePage> {
     var container = Container(
       //外边距
 //      margin: EdgeInsets.only(top: 80),
-      margin: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
+//      margin: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
 
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,41 +226,6 @@ class MePageState extends State<MePage> {
     );
   }
 
-  /// 图片轮播效果部件
-  Widget swapPageView() {
-    return new Swiper(
-      itemBuilder: (BuildContext context, int index) {
-        return cardView();
-      },
-      itemCount: 5,
-      //自动翻页
-      autoplay: true,
-      // 设置宽度
-      itemWidth: MediaQuery.of(context).size.width * 0.9,
-      layout: SwiperLayout.STACK,
-      // 分页指示器
-      pagination: SwiperPagination(
-          alignment: Alignment.bottomCenter, // 位置 Alignment.bottomRight
-          margin: const EdgeInsets.fromLTRB(0, 0, 20, 10), // 距离调整
-          //圆点滚动
-          // 指示器构建
-          builder: DotSwiperPaginationBuilder(
-            // 字体颜色
-            color: Colors.white,
-            // 当前的指示字体颜色
-            activeColor: Colors.orange,
-            // 大小
-            size: 5,
-            // 当前的指示字体大小
-            activeSize: 8,
-            space: 1,
-          )),
-      scale: 0.95,
-      // 两张图片之间的间隔
-      viewportFraction: 0.8, // 当前视窗展示比例 小于1可见上一个和下一个视窗
-    );
-  }
-
 // ios风格的对话框
   void exitSystemIos() {
     showCupertinoDialog(
@@ -314,6 +279,7 @@ class MePageState extends State<MePage> {
     return Scaffold(
 //      backgroundColor: Colors.grey,
       appBar: AppBar(
+        automaticallyImplyLeading: false, //设置没有返回按钮
         centerTitle: true,
         title: Text("个人中心", style: TextStyle(fontSize: 15)),
       ),
@@ -326,7 +292,6 @@ class MePageState extends State<MePage> {
         child: new Icon(Icons.mail),
         backgroundColor: Colors.orange,
       ),
-//      body: initView(),
       body: initView(),
     );
   }
