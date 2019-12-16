@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_truck_app/device/deivelist.dart';
+import 'package:flutter_truck_app/menu/drop_down_menu.dart';
 import 'package:flutter_truck_app/report/report.dart';
 import 'package:flutter_truck_app/station/station_cardview_list.dart';
 import 'package:flutter_truck_app/truck/truckInfoList.dart';
-import 'package:flutter_truck_app/truck/truckQuery.dart';
 import 'package:flutter_truck_app/utils/mybutton.dart';
 import 'package:marquee_flutter/marquee_flutter.dart';
 
@@ -45,7 +45,9 @@ class HomePageState extends State<HomePage> {
   void onTabTruckQuery() {
     //go to station
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new TruckQueryPage();
+      //RefreshListViewPage
+//      return new TruckQueryPage();
+      return new DropDownMenu();
     }));
     print("车辆查询..");
   }
@@ -102,11 +104,13 @@ class HomePageState extends State<HomePage> {
   }
 
   ///
-  StatefulWidget marqueeWidget() {
-    return new MarqueeWidget(
-      text: "我的跑马灯。。。。。。 我是跑马灯。。。。",
-      textStyle: new TextStyle(fontSize: 16.0),
-      scrollAxis: Axis.horizontal,
+  Widget marqueeWidget() {
+    return Center(
+      child: new MarqueeWidget(
+        text: "关于金塘路与北环城路交叉口道路改造工程交通管制的通告。。。",
+        textStyle: new TextStyle(fontSize: 15.0, color: Colors.white),
+        scrollAxis: Axis.horizontal,
+      ),
     );
   }
 
@@ -114,7 +118,7 @@ class HomePageState extends State<HomePage> {
   Widget gridViewMenu() {
     return new Container(
       //padding
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 0),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, //每行2个
@@ -233,10 +237,27 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("首页", style: TextStyle(fontSize: 15)),
-        ),
-        body: gridViewMenu());
+//        appBar: AppBar(
+//          centerTitle: true,
+//          title: Text("首页", style: TextStyle(fontSize: 15)),
+//        ),
+        body: Column(
+      children: <Widget>[
+        new Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.green,
+              padding: EdgeInsets.only(top: 20),
+              child: marqueeWidget(),
+            )),
+        new Expanded(
+            flex: 7,
+            child: Stack(
+              children: <Widget>[
+                gridViewMenu(),
+              ],
+            ))
+      ],
+    ));
   }
 }
