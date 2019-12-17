@@ -71,160 +71,152 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
   }
 
   Widget _widgetCard() {
-    if (_truckDto != null) {
-      return Card(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: new Table(
-            //设置每一列的宽度
-            columnWidths: <int, TableColumnWidth>{
-              0: FixedColumnWidth(110.0),
-              1: FixedColumnWidth(300.0),
-            },
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            border: new TableBorder.all(width: 1.0, color: Colors.transparent),
-            children: <TableRow>[
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('序号'),
-                  ),
-                  new TableCell(
-                    child: new Text('${queryNumber}'),
-//                    ),
-                  ),
-                ],
-              ),
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: new Table(
+          //设置每一列的宽度
+          columnWidths: <int, TableColumnWidth>{
+            0: FixedColumnWidth(110.0),
+            1: FixedColumnWidth(300.0),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          border: new TableBorder.all(width: 1.0, color: Colors.transparent),
+          children: <TableRow>[
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('序号'),
+                ),
+                new TableCell(
+                  child: new Text('${queryNumber}'),
+                ),
+              ],
+            ),
 
-              //车牌号码
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text(
-                      '车牌号码',
-                      style: (TextStyle(color: Colors.orange)),
-                    ),
+            //车牌号码
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text(
+                    '车牌号码',
+                    style: (TextStyle(color: Colors.orange)),
                   ),
-                  new TableCell(
-                    child: new Text('${_truckDto.cPH}'),
-//                    ),
-                  ),
-                ],
-              ),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.cPH}'),
+                ),
+              ],
+            ),
 
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('检测单号'),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('检测单号'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.jCDH}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('检测设备编号'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.jCSBBH}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('检定证书编号'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.jDZSBH}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('检测时间'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.jCSJ}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('站点'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.dDN}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('检测设备编号'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.jCSBBH}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('点位'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.dW}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('线路'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.xL}'),
+                ),
+              ],
+            ),
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text('检测方向'),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.fX}'),
+                ),
+              ],
+            ),
+            //超限率(%)
+            new TableRow(
+              children: <Widget>[
+                new TableCell(
+                  child: new Text(
+                    '超限率(%)',
+                    style: (TextStyle(color: Colors.red)),
                   ),
-                  new TableCell(
-                    child: new Text('${_truckDto.jCDH}'),
-//                    ),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('检测设备编号'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.jCSBBH}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('检定证书编号'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.jDZSBH}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('检测时间'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.jCSJ}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('站点'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.dDN}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('检测设备编号'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.jCSBBH}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('点位'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.dW}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('线路'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.xL}'),
-                  ),
-                ],
-              ),
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text('检测方向'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.fX}'),
-                  ),
-                ],
-              ),
-              //超限率(%)
-              new TableRow(
-                children: <Widget>[
-                  new TableCell(
-                    child: new Text(
-                      '超限率(%)',
-                      style: (TextStyle(color: Colors.red)),
-                    ),
-//                    child: new Text('超限率(%)'),
-                  ),
-                  new TableCell(
-                    child: new Text('${_truckDto.cXL} %'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                new TableCell(
+                  child: new Text('${_truckDto.cXL} %'),
+                ),
+              ],
+            ),
+          ],
         ),
-      );
-    } else {
-      return Text("loading...");
-    }
+      ),
+    );
   }
 
   /// _itemTruckBuilder
@@ -278,14 +270,19 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
   }
 
   Widget _bodyView() {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      children: <Widget>[
-        _widgetCard(),
-        _truckImagesWidget(),
-      ],
-    );
+    if (_truckDto == null || queryNumber == null) {
+      // 加载菊花
+      return CupertinoActivityIndicator();
+    } else {
+      return ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: <Widget>[
+          _widgetCard(),
+          _truckImagesWidget(),
+        ],
+      );
+    }
   }
 
   @override
