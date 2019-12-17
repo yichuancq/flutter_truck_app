@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_truck_app/model/truckdto.dart';
+import 'package:flutter_truck_app/truck/TruckInfoItemPage.dart';
 import 'package:flutter_truck_app/vo/truckvo.dart';
 
 /// 车辆实时数据
@@ -12,7 +13,7 @@ class TruckInfoListPage extends StatefulWidget {
     return TruckInfoListPageState();
   }
 }
-
+//http://111.17.167.148:8090/CarBaseInfo/CurrentReflesh/GetPageListJson?queryJson=%7B%22isOver%22%3A1%2C%22StartTime%22%3A%222019-11-18%22%2C%22EndTime%22%3A%222019-12-18%22%2C%22DD%22%3A%22%22%2C%22CPH%22%3A%22%22%7D&_search=false&nd=1576599306995&rows=15&page=1&sidx=XH&sord=desc
 class TruckInfoListPageState extends State<TruckInfoListPage> {
   bool switchValue = true;
   String _newValue = 'GD308';
@@ -177,12 +178,23 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
 
     return GestureDetector(
       onTap: () {
+        doNavigator();
         print("click item index=$position");
       },
       child: new Card(
         child: row,
       ),
     );
+  }
+  //
+  void doNavigator() {
+
+    //TruckInfoListPage
+    //go to station
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new TruckInfoItemPage();
+    }));
+    print("车辆实时数据item..");
   }
 
   //构造数据
@@ -280,7 +292,6 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
                         }),
                   ),
                   new Slider(
-//                    label: "更新间隔：${sliderValue.toInt()} sec",
                     value: _sliderValue,
                     max: 100.0,
                     min: 0.0,
@@ -291,7 +302,7 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
                     },
                   ),
                   new Text(
-                    "自动更新间隔：${_sliderValue.toInt()} 秒",
+                    "数据自动更新间隔：${_sliderValue.toInt()} 秒",
                     textAlign: TextAlign.center,
                   ),
 //
