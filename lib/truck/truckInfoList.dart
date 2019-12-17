@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_truck_app/model/truckdto.dart';
-import 'package:flutter_truck_app/truck/TruckInfoItemPage.dart';
+import 'package:flutter_truck_app/truck/TruckInfoItem.dart';
+import 'package:flutter_truck_app/utils/http_truck_service.dart';
 import 'package:flutter_truck_app/vo/truckvo.dart';
 
 /// 车辆实时数据
@@ -13,6 +14,7 @@ class TruckInfoListPage extends StatefulWidget {
     return TruckInfoListPageState();
   }
 }
+
 //http://111.17.167.148:8090/CarBaseInfo/CurrentReflesh/GetPageListJson?queryJson=%7B%22isOver%22%3A1%2C%22StartTime%22%3A%222019-11-18%22%2C%22EndTime%22%3A%222019-12-18%22%2C%22DD%22%3A%22%22%2C%22CPH%22%3A%22%22%7D&_search=false&nd=1576599306995&rows=15&page=1&sidx=XH&sord=desc
 class TruckInfoListPageState extends State<TruckInfoListPage> {
   bool switchValue = true;
@@ -46,8 +48,12 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
   }
 
   void loadData() async {
+    TruckDto truckDto = await getTruckDtoHttp();
+    if (truckDto == null) {
+      truckDto = await decodeFromDTO();
+    }
     //读取json
-    TruckDto truckDto = await decodeFromDTO();
+//    TruckDto
     _truckList = truckDto.rows;
     print("list size: ${_truckList.length}");
     //更新列表
@@ -56,10 +62,19 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     });
   }
 
+  Future<TruckDto> testNet() async {
+    TruckDto dto = await getTruckDtoHttp();
+    print("list size; ${dto.rows.length}");
+
+    setState(() {});
+    return dto;
+  }
+
   void reLoadData() async {
     print("on reLoadData...");
     //读取json
-    TruckDto truckDto = await decodeFromDTO();
+    TruckDto truckDto = await getTruckDtoHttp();
+//    TruckDto truckDto = await decodeFromDTO();
     _truckList = truckDto.rows;
     print("list size: ${_truckList.length}");
 
@@ -75,22 +90,33 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     });
   }
 
+  ///
+  Widget _rowHeader(Rows dataItem) {
+    MaterialColor materialColor = Colors.green;
+    if (dataItem != null) {
+      if (dataItem.cXL > 100.00) {
+        materialColor = Colors.red;
+      } else {
+        materialColor = Colors.grey;
+      }
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(2.0),
+      child: new Icon(
+        Icons.directions_car,
+        color: materialColor,
+      ),
+    );
+  }
+
   Widget buildRows(final int position) {
     Rows dto = _truckList[position];
     var row = Container(
       margin: EdgeInsets.all(10.0), // 边界
-//      padding: EdgeInsets.all(1.0), // 填充
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(2.0),
-            child: Image.asset(
-              "assets/image/check_station.png",
-              width: 40,
-              height: 40,
-              fit: BoxFit.fill,
-            ),
-          ),
+          _rowHeader(dto),
           Expanded(
             //设置弹性系数
 //            flex: 1,
@@ -186,9 +212,9 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
       ),
     );
   }
+
   //
   void doNavigator() {
-
     //TruckInfoListPage
     //go to station
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
