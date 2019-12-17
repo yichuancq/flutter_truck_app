@@ -204,7 +204,7 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
 
     return GestureDetector(
       onTap: () {
-        doNavigator();
+        doNavigator(dto);
         print("click item index=$position");
       },
       child: new Card(
@@ -214,11 +214,12 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
   }
 
   //
-  void doNavigator() {
-    //TruckInfoListPage
-    //go to station
+  void doNavigator(final Rows dto) {
+    if (dto == null) {
+      return;
+    }
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new TruckInfoItemPage();
+      return new TruckInfoItemPage(orderNumber: dto.xH);
     }));
     print("车辆实时数据item..");
   }
