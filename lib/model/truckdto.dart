@@ -46,9 +46,11 @@ class Rows {
   String fX;
   String zS;
   String sD;
-  int zZ;
-  int cX;
-  dynamic cXL;
+  dynamic zZ;
+  dynamic cX; //超限
+  dynamic cXL; //超限率
+//  dynamic cXL; //超限率
+
 //  double cXL;
   String cLBS;
   Null cLSJ;
@@ -92,7 +94,7 @@ class Rows {
       this.zS,
       this.sD,
       this.zZ,
-      this.cX,
+      this.cX, //超限
       this.cXL,
       this.cLBS,
       this.cLSJ,
