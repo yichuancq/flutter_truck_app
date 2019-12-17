@@ -4,6 +4,7 @@ import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_truck_app/model/truckdto.dart';
 import 'package:flutter_truck_app/vo/truckvo.dart';
+
 /// 车辆实时数据
 ///
 /// //子类别 default
@@ -61,6 +62,9 @@ class TruckInfoListPageState extends State<TruckInfoListPage>
       new GlobalKey<EasyRefreshState>();
   GlobalKey<RefreshHeaderState> _headerKey =
       new GlobalKey<RefreshHeaderState>();
+
+  @override
+  bool get wantKeepAlive => false;
 
   ///初始化
   @override
@@ -123,6 +127,7 @@ class TruckInfoListPageState extends State<TruckInfoListPage>
     if (subData != null && subData['title'] != null) {
       print("menu key is:" + subData['title']);
       var key = subData['title'];
+
       ///ZDCode
       var whereList = _truckList.where((element) => element.dD == key).toList();
       print("过滤后的集合大小 :${whereList.length}");
@@ -289,9 +294,6 @@ class TruckInfoListPageState extends State<TruckInfoListPage>
       body: new SafeArea(child: _viewBuild()),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 ////

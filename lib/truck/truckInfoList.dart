@@ -14,6 +14,10 @@ class TruckInfoListPage extends StatefulWidget {
 }
 
 class TruckInfoListPageState extends State<TruckInfoListPage> {
+  bool switchValue = true;
+  String _newValue = 'GD308';
+  double _sliderValue = 30;
+
   //自定义一个数据集合
   List<Rows> _truckList = [];
 
@@ -45,6 +49,25 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     TruckDto truckDto = await decodeFromDTO();
     _truckList = truckDto.rows;
     print("list size: ${_truckList.length}");
+    //更新列表
+    setState(() {
+      //状态
+    });
+  }
+
+  void reLoadData() async {
+    print("on reLoadData...");
+    //读取json
+    TruckDto truckDto = await decodeFromDTO();
+    _truckList = truckDto.rows;
+    print("list size: ${_truckList.length}");
+
+    //    ///ZDCode
+    var whereList =
+        _truckList.where((element) => element.dD == _newValue).toList();
+    print("过滤后的集合大小 :${whereList.length}");
+    _truckList.clear();
+    _truckList.addAll(whereList);
     //更新列表
     setState(() {
       //状态
@@ -162,45 +185,6 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     );
   }
 
-  //构造item
-//  Widget buildRow(final int position) {
-//    Rows dto = _truckList[position];
-//
-//    ///ListTile布局
-//    return new ListTile(
-//      onTap: () {},
-//      // leading: Icon(Icons.directions_bus),
-//      title: Text("车牌号：${dto.cPH}",
-//          style: TextStyle(color: Colors.black, fontSize: 15)),
-//      // 自定义样式
-//      subtitle: Column(
-//        mainAxisAlignment: MainAxisAlignment.start,
-//        crossAxisAlignment: CrossAxisAlignment.start,
-//        children: <Widget>[
-//          Text("线路: ${dto.dDN}",
-//              style: TextStyle(color: Colors.black, fontSize: 13)),
-//          //方向
-//          Text(
-//              "方向:${dto.fX} , 车道号:${dto.cD} , 轴数：${dto.zS}, 总重:${dto.zZ} kg"
-//              " \r\n速度:${dto.sD} km/h  ,超限率: ${dto.cXL}%",
-//              style: TextStyle(color: Colors.black, fontSize: 13)),
-//          //车道号
-//          // Text("车道号:${dto.cD}", style: TextStyle(color: Colors.black, fontSize: 13)),
-//          Text("超限:${dto.cX} kg",
-//              style: TextStyle(color: Colors.redAccent, fontSize: 13)),
-//          Text("检测时间 ${dto.jCSJ}",
-//              style: TextStyle(color: Colors.green, fontSize: 13)),
-//        ],
-//      ),
-//      //
-//      trailing: new Column(children: <Widget>[
-//        Expanded(
-//          child: new Container(child: new Icon(Icons.navigate_next)),
-//        ),
-//      ]),
-//    );
-//  }
-
   //构造数据
   getRowData(int position) {
     return GestureDetector(
@@ -233,6 +217,98 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
     );
   }
 
+  ///
+  Widget _radioListTileBuilder(String text, StateSetter setBottomSheetState) {
+    return new RadioListTile(
+      secondary: const Icon(
+        Icons.home,
+        size: 18,
+      ),
+      title: Text(
+        text,
+        style: TextStyle(fontSize: 15),
+      ),
+      value: text,
+      groupValue: _newValue,
+      onChanged: (value) {
+        //
+        setBottomSheetState(() {
+          _newValue = value;
+          print("_newValue =" + _newValue);
+        });
+      },
+    );
+  }
+
+  ///
+  Future _myModalBottomSheet() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        isDismissible: true,
+        // 圆角
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        )),
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              //在这里为了区分，在构建builder的时候将setState方法命名为了setBottomSheetState。
+              builder: (context, setBottomSheetState) {
+            return Container(
+              height: 480,
+              child: Column(
+                children: <Widget>[
+                  _radioListTileBuilder("GD308", setBottomSheetState),
+                  _radioListTileBuilder("GD309", setBottomSheetState),
+                  _radioListTileBuilder("HJL01", setBottomSheetState),
+                  _radioListTileBuilder("S105NB", setBottomSheetState),
+                  _radioListTileBuilder("S105BN", setBottomSheetState),
+                  new ListTile(
+                    onTap: () {
+                      setBottomSheetState(() {});
+                      switchValue = !switchValue;
+                    },
+                    title: Text("自动刷新？${switchValue ? "Yes" : "No"}"),
+                    trailing: Switch.adaptive(
+                        value: switchValue,
+                        onChanged: (val) {
+                          setBottomSheetState(() {
+                            switchValue = val;
+                          });
+                        }),
+                  ),
+                  new Slider(
+//                    label: "更新间隔：${sliderValue.toInt()} sec",
+                    value: _sliderValue,
+                    max: 100.0,
+                    min: 0.0,
+                    onChanged: (double val) {
+                      setBottomSheetState(() {
+                        this._sliderValue = val;
+                      });
+                    },
+                  ),
+                  new Text(
+                    "自动更新间隔：${_sliderValue.toInt()} 秒",
+                    textAlign: TextAlign.center,
+                  ),
+//
+                  new ListTile(
+                    title: Text('确定', textAlign: TextAlign.center),
+                    onTap: () {
+                      Navigator.pop(context, '确定');
+                      reLoadData();
+                    },
+                  ),
+                ],
+              ),
+            );
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -241,10 +317,16 @@ class TruckInfoListPageState extends State<TruckInfoListPage> {
         actions: <Widget>[
           // 非隐藏的菜单
           new IconButton(
-              icon: new Icon(Icons.more_vert), tooltip: 'setting', onPressed: () {}),
+              icon: new Icon(Icons.menu),
+              tooltip: 'setting',
+              onPressed: () {
+                _myModalBottomSheet();
+                // open dialog
+              }),
         ],
         centerTitle: true,
-        title: Text("车辆实时数据", style: TextStyle(fontSize: 15)),
+        title:
+            Text("车辆实时数据${_truckList.length}条", style: TextStyle(fontSize: 15)),
       ),
 //    body: viewBuild(),
       body: new SafeArea(child: _viewBuild()),

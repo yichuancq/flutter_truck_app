@@ -22,7 +22,7 @@ class DropDownMenu extends StatefulWidget {
 class DropDownMenuState extends State<DropDownMenu>
     with AutomaticKeepAliveClientMixin {
   GlobalKey globalKey;
-  var listView = new TruckInfoListPage(data: subData);
+  var listView = new TruckInfoListPage(data:subData);
 
   ///
   @override
@@ -95,6 +95,8 @@ class DropDownMenuState extends State<DropDownMenu>
           print("index ->${index}");
           print("subIndex ->${subIndex}");
           print("data ->${data.toString()}");
+          //
+          listView.createState(data: subData);
           // TODO refresh
           //{title: S105NB, id: 4}
         });
