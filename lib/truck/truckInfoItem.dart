@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_truck_app/model/struckitemdto.dart';
@@ -8,7 +8,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 /// 车辆实时数据item
 int queryNumber = 0;
-
 class TruckInfoItemPage extends StatefulWidget {
   //序号
   final int orderNumber;
@@ -28,6 +27,7 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
   dynamic size = 0;
   dynamic width = 0;
   dynamic height = 0;
+  double process = 0.0;
 
 //  ///
 //  Future<TruckItemDto> testNet() async {
@@ -228,6 +228,7 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
     _checkPermission();
     var savePath = "";
     try {
+      ///storage/emulated/0/truck_1403068214030682_farPicBak.png
       var _localPath = "/storage/emulated/0";
 
       print("downloadUrl is :${downloadUrl}");
@@ -252,7 +253,35 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
       print("picName:" + picName);
       savePath = _localPath + "/truck_" + picName + ".png";
       print("savePath:" + savePath);
-      downloadFile(downloadUrl, savePath);
+      _downloadFile(downloadUrl, savePath);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  ///down file
+  void _downloadFile(final String downloadUrl, final String savePath) async {
+    try {
+      Dio dio = Dio();
+      Map<String, dynamic> headers = new Map();
+      headers['Cookie'] = cookie;
+      Options options = new Options(headers: headers);
+      //设置连接超时时间
+      dio.options.connectTimeout = 10000;
+      //设置数据接收超时时间
+      dio.options.receiveTimeout = 10000;
+      Response response = await dio.download(downloadUrl, savePath,
+          options: options, onReceiveProgress: (received, total) {
+        ///process
+        setState(() {
+          process = received / total;
+        });
+        print((received / total * 100).toStringAsFixed(0) + "%");
+      });
+
+      if (response.statusCode == 200) {
+        print('下载请求成功');
+      }
     } catch (e) {
       print(e);
     }
@@ -320,7 +349,6 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
     return false;
   }
 
-//
 //  // 获取存储路径
 //  Future<String> _findLocalPath() async {
 //    // 因为Apple没有外置存储，所以第一步我们需要先对所在平台进行判断
@@ -333,18 +361,13 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
 //  }
 
   /// _itemTruckBuilder
-  Widget _itemTruckBuilder(String imgURL, String name) {
+  Widget _itemTruckBuilder(String imgURL) {
     return Card(
       elevation: 0.5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.network(imgURL, width: 300, height: 200, fit: BoxFit.fill),
-          Text(name,
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15.0)),
           MaterialButton(
             child: new Row(
               children: <Widget>[
@@ -372,13 +395,14 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
             "http://111.17.167.148:8090/${_truckDto.farPicBack}";
         final String url3 = "http://111.17.167.148:8090/${_truckDto.farPicBak}";
         return Container(
-          height: 280,
+          height: 260,
+//          height: 280,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget>[
-              _itemTruckBuilder("${url1}", "图片1"),
-              _itemTruckBuilder("${url3}", "图片2"),
-              _itemTruckBuilder("${url2}", "图片3"),
+              _itemTruckBuilder("${url1}"),
+              _itemTruckBuilder("${url3}"),
+              _itemTruckBuilder("${url2}"),
             ],
           ),
         );
@@ -407,6 +431,9 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
         children: <Widget>[
           _widgetCard(),
           _truckImagesWidget(),
+//          LinearProgressIndicator(
+//            value: process,
+//          ),
         ],
       );
     }
