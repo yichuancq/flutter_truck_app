@@ -26,10 +26,10 @@ class MenuPageState extends State<MenuPage> {
     }
   }
 
-  // style: Theme.of(context).textTheme.display1,
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Colors.grey,
       body: buildBodyPage(),
       bottomNavigationBar: new BottomNavigationBar(
         currentIndex: index,

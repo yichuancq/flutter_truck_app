@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_truck_app/model/truckdto.dart';
-import 'package:flutter_truck_app/truck/TruckInfoItem.dart';
+import 'package:flutter_truck_app/truck/truckInfoItem.dart';
 import 'package:flutter_truck_app/utils/http_truck_service.dart';
 import 'package:flutter_truck_app/vo/truckvo.dart';
 

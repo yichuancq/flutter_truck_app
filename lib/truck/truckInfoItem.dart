@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_truck_app/model/struckitemdto.dart';
 import 'package:flutter_truck_app/utils/http_truck_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// 车辆实时数据item
 int queryNumber = 0;
@@ -50,6 +53,7 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
     loadData();
     print("on initState...");
     super.initState();
+    setState(() {});
   }
 
   void loadData() async {
@@ -219,6 +223,115 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
     );
   }
 
+  //下载文件
+  void _downLoad(final String downloadUrl) async {
+    _checkPermission();
+    var savePath = "";
+    try {
+      var _localPath = "/storage/emulated/0";
+
+      print("downloadUrl is :${downloadUrl}");
+      final savedDir = Directory(_localPath);
+      // 判断下载路径是否存在
+      bool hasExisted = await savedDir.exists();
+      print("hasExisted-->${hasExisted}");
+      // 不存在就新建路径
+      if (!hasExisted) {
+        savedDir.create();
+      }
+      var picName = "${queryNumber}";
+      if (downloadUrl.endsWith("-1.jpg")) {
+        picName += picName + "_farPic";
+      }
+      if (downloadUrl.endsWith("-2.jpg")) {
+        picName += picName + "_farPicBack";
+      }
+      if (downloadUrl.endsWith("-3.jpg")) {
+        picName += picName + "_farPicBak";
+      }
+      print("picName:" + picName);
+      savePath = _localPath + "/truck_" + picName + ".png";
+      print("savePath:" + savePath);
+      downloadFile(downloadUrl, savePath);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+//  // 根据 downloadUrl 和 savePath 下载文件
+//  _downloadFile(downloadUrl, savePath) async {
+//    await FlutterDownloader.enqueue(
+//      url: downloadUrl,
+//      savedDir: savePath,
+//      showNotification: true,
+//      // show download progress in status bar (for Android)
+//      openFileFromNotification:
+//          true, // click on notification to open downloaded file (for Android)
+//    );
+//  }
+
+  void _downLoadImage(final String url) {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return new CupertinoAlertDialog(
+            content: new Text("下载选择图片？"),
+            actions: <Widget>[
+              new CupertinoDialogAction(
+                child: new Text('取消'),
+                isDefaultAction: true,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              new CupertinoDialogAction(
+                child: new Text('确定'),
+                isDestructiveAction: true,
+                onPressed: () {
+                  // TODO
+                  Navigator.of(context).pop();
+                  _downLoad(url);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  // 申请权限
+  Future<bool> _checkPermission() async {
+    // 先对所在平台进行判断
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      PermissionStatus permission = await PermissionHandler()
+          .checkPermissionStatus(PermissionGroup.storage);
+      if (permission != PermissionStatus.granted) {
+        Map<PermissionGroup, PermissionStatus> permissions =
+            await PermissionHandler()
+                .requestPermissions([PermissionGroup.storage]);
+        if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+    return false;
+  }
+
+//
+//  // 获取存储路径
+//  Future<String> _findLocalPath() async {
+//    // 因为Apple没有外置存储，所以第一步我们需要先对所在平台进行判断
+//    // 如果是android，使用getExternalStorageDirectory
+//    // 如果是iOS，使用getApplicationSupportDirectory
+//    final directory = Theme.of(context).platform == TargetPlatform.android
+//        ? await getExternalStorageDirectory()
+//        : await getApplicationSupportDirectory();
+//    return directory.path;
+//  }
+
   /// _itemTruckBuilder
   Widget _itemTruckBuilder(String imgURL, String name) {
     return Card(
@@ -232,6 +345,17 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                   fontSize: 15.0)),
+          MaterialButton(
+            child: new Row(
+              children: <Widget>[
+                Icon(Icons.file_download),
+                Text("下载"),
+              ],
+            ),
+            onPressed: () {
+              _downLoadImage(imgURL);
+            },
+          ),
         ],
       ),
     );
@@ -248,7 +372,7 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
             "http://111.17.167.148:8090/${_truckDto.farPicBack}";
         final String url3 = "http://111.17.167.148:8090/${_truckDto.farPicBak}";
         return Container(
-          height: 240,
+          height: 280,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget>[
@@ -272,7 +396,10 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
   Widget _bodyView() {
     if (_truckDto == null || queryNumber == null) {
       // 加载菊花
-      return CupertinoActivityIndicator();
+      return Center(
+        child: CupertinoActivityIndicator(),
+      );
+      //return CupertinoActivityIndicator();
     } else {
       return ListView(
         scrollDirection: Axis.vertical,
