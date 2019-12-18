@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_truck_app/model/struckitemdto.dart';
 import 'package:flutter_truck_app/utils/http_truck_service.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// 车辆实时数据item
 int queryNumber = 0;
+
 class TruckInfoItemPage extends StatefulWidget {
   //序号
   final int orderNumber;
@@ -27,25 +29,8 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
   dynamic size = 0;
   dynamic width = 0;
   dynamic height = 0;
-  double process = 0.0;
-
-//  ///
-//  Future<TruckItemDto> testNet() async {
-//    TruckItemDto dto = await getTruckItemDtoHttp(queryNumber);
-//    print("${dto.toString()}");
-//    print("number: ${dto.number}");
-//    print("CPH: ${dto.cPH}"); //PM5257
-//    print("jCSJ: ${dto.jCSJ}"); //2019/12/18 2:47:51
-//    print("DD: ${dto.dD}"); //GD309
-//    print("JCDH: ${dto.jCDH}"); //371425022019121802475114017390
-//    print("jDZSBH: ${dto.jDZSBH}"); //13-20185378
-//    print("DDN: ${dto.dDN}"); //西颜村检测点
-//    print("FX: ${dto.fX}"); //西往东
-//    print("CDH: ${dto.cDH}"); //3
-//
-//    setState(() {});
-//    return dto;
-//  }
+  double process = 0.0; // 下载到进度
+  bool _isShowing = false; // 下载进度条显示
 
   ///初始化
   @override
@@ -262,6 +247,10 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
   ///down file
   void _downloadFile(final String downloadUrl, final String savePath) async {
     try {
+      setState(() {
+        _isShowing = true;
+      });
+
       Dio dio = Dio();
       Map<String, dynamic> headers = new Map();
       headers['Cookie'] = cookie;
@@ -276,7 +265,7 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
         setState(() {
           process = received / total;
         });
-        print((received / total * 100).toStringAsFixed(0) + "%");
+        // print((received / total * 100).toStringAsFixed(0) + "%");
       });
 
       if (response.statusCode == 200) {
@@ -284,20 +273,12 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
       }
     } catch (e) {
       print(e);
+    } finally {
+      setState(() {
+        _isShowing = false;
+      });
     }
   }
-
-//  // 根据 downloadUrl 和 savePath 下载文件
-//  _downloadFile(downloadUrl, savePath) async {
-//    await FlutterDownloader.enqueue(
-//      url: downloadUrl,
-//      savedDir: savePath,
-//      showNotification: true,
-//      // show download progress in status bar (for Android)
-//      openFileFromNotification:
-//          true, // click on notification to open downloaded file (for Android)
-//    );
-//  }
 
   void _downLoadImage(final String url) {
     showCupertinoDialog(
@@ -310,7 +291,7 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
                 child: new Text('取消'),
                 isDefaultAction: true,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                 },
               ),
               new CupertinoDialogAction(
@@ -348,17 +329,6 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
     }
     return false;
   }
-
-//  // 获取存储路径
-//  Future<String> _findLocalPath() async {
-//    // 因为Apple没有外置存储，所以第一步我们需要先对所在平台进行判断
-//    // 如果是android，使用getExternalStorageDirectory
-//    // 如果是iOS，使用getApplicationSupportDirectory
-//    final directory = Theme.of(context).platform == TargetPlatform.android
-//        ? await getExternalStorageDirectory()
-//        : await getApplicationSupportDirectory();
-//    return directory.path;
-//  }
 
   /// _itemTruckBuilder
   Widget _itemTruckBuilder(String imgURL) {
@@ -431,9 +401,6 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
         children: <Widget>[
           _widgetCard(),
           _truckImagesWidget(),
-//          LinearProgressIndicator(
-//            value: process,
-//          ),
         ],
       );
     }
@@ -451,7 +418,14 @@ class TruckInfoItemPageState extends State<TruckInfoItemPage> {
         centerTitle: true,
         title: Text("公路车辆超限行为凭证", style: TextStyle(fontSize: 15)),
       ),
-      body: _bodyView(),
+      body: ModalProgressHUD(
+        dismissible:false,
+        progressIndicator: CircularProgressIndicator(
+          value: process,
+        ),
+        child: _bodyView(),
+        inAsyncCall: _isShowing,
+      ), //_bodyView(),
     );
   }
 }
